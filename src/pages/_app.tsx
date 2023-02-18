@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
+import { MainLayout } from "@/shared/components/MainLayout";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -16,7 +17,9 @@ export default function App({ Component, pageProps }: AppProps) {
         },
       }}
     >
-      <Component {...pageProps} />
+      <MainLayout>
+        <Component {...pageProps} />
+      </MainLayout>
     </MantineProvider>
   );
 }
