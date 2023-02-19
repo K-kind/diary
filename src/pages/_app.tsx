@@ -1,6 +1,11 @@
 import type { AppProps } from "next/app";
 import { MantineProvider } from "@mantine/core";
 import { MainLayout } from "@/shared/components/MainLayout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { suspense: true } },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,9 +22,11 @@ export default function App({ Component, pageProps }: AppProps) {
         },
       }}
     >
-      <MainLayout>
-        <Component {...pageProps} />
-      </MainLayout>
+      <QueryClientProvider client={queryClient}>
+        <MainLayout>
+          <Component {...pageProps} />
+        </MainLayout>
+      </QueryClientProvider>
     </MantineProvider>
   );
 }
