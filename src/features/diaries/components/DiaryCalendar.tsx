@@ -5,28 +5,22 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { LoadingOverlay, useMantineTheme } from "@mantine/core";
 import { useDiaryList } from "@/features/diaries/api/getDiaryList";
 import { DatesSetArg } from "@fullcalendar/core";
-import { addDays, subDays } from "date-fns";
-import { format } from "@/shared/utils/date";
+import { format, add } from "@/shared/utils/date";
 import styled from "@emotion/styled";
 
-export type DateRange = { from: string; to: string };
+type DateRange = { from: string; to: string };
 
 type Props = {
   initialDate?: string;
-  dateRange: DateRange | null;
-  setDateRange: (dateRange: DateRange) => void;
 };
 
-export const DiaryCalendar = ({
-  initialDate,
-  dateRange,
-  setDateRange,
-}: Props) => {
+export const DiaryCalendar = ({ initialDate }: Props) => {
   const theme = useMantineTheme();
+  const [dateRange, setDateRange] = useState<DateRange | null>(null);
   const diaryListQuery = useDiaryList({
     from: dateRange?.from!,
     to: dateRange?.to!,
-    config: { enabled: dateRange !== null },
+    config: { enabled: dateRange !== null, suspense: false },
   });
 
   const events = useMemo(() => {
@@ -39,23 +33,15 @@ export const DiaryCalendar = ({
     });
   }, [diaryListQuery.data]);
 
-  // Suspenseの関係でFullCalendarは再度マウントされる。その時initialDateを保つため、from toの中間くらいの日付を取得。
-  const middleDate = useMemo(() => {
-    if (dateRange == null) return undefined;
-
-    const day = addDays(new Date(dateRange.from), 15);
-    return format(day, "yyyy-MM-dd");
-  }, [dateRange]);
-
   const handleDatesSet = ({ start, end }: DatesSetArg) => {
     const from = format(start, "yyyy-MM-dd");
-    const to = format(subDays(end, 1), "yyyy-MM-dd");
+    const to = format(add(end, { days: -1 }), "yyyy-MM-dd");
     setDateRange({ from, to });
   };
 
   return (
     <StyledWrapper style={{ position: "relative" }}>
-      {/* <LoadingOverlay visible={true} /> */}
+      <LoadingOverlay visible={diaryListQuery.isLoading} />
       <FullCalendar
         plugins={[dayGridPlugin, interactionPlugin]}
         locale="ja"
@@ -65,7 +51,7 @@ export const DiaryCalendar = ({
         eventBorderColor={theme.colors.red[0]}
         eventTextColor={theme.colors.dark[3]}
         height="auto"
-        initialDate={middleDate ?? initialDate}
+        initialDate={initialDate}
         events={events}
         selectable
         datesSet={handleDatesSet}

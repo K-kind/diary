@@ -1,7 +1,4 @@
-import {
-  DateRange,
-  DiaryCalendar,
-} from "@/features/diaries/components/DiaryCalendar";
+import { DiaryCalendar } from "@/features/diaries/components/DiaryCalendar";
 import { DiaryColumn } from "@/features/diaries/components/DiaryColumn";
 import { Diary } from "@/features/diaries/types/diary";
 import { ContentLoader } from "@/shared/components/ContentLoader";
@@ -14,8 +11,6 @@ export default function DiaryDetailPage() {
   const router = useRouter();
   // TODO: 無効なdateが渡ってくることは想定しない
   const date = router.query.date as string;
-  // Suspense等の都合でカレンダー側で持つのは難しいため親で持つ
-  const [dateRange, setDateRange] = useState<DateRange | null>(null);
   const [selectedDiary, setSelectedDiary] = useState<Diary | null>(null);
 
   return (
@@ -30,13 +25,7 @@ export default function DiaryDetailPage() {
         </Grid.Col>
         <Grid.Col span={5}>
           <Suspense fallback={<ContentLoader height={594} />}>
-            {date && (
-              <DiaryCalendar
-                initialDate={date}
-                dateRange={dateRange}
-                setDateRange={setDateRange}
-              />
-            )}
+            {date && <DiaryCalendar initialDate={date} />}
           </Suspense>
         </Grid.Col>
       </Grid>
