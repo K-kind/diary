@@ -12,23 +12,13 @@ create index on public.diaries (user_id, date);
 -- Extensions and triggers
 create extension if not exists moddatetime schema extensions;
 
-create trigger handle_room_updated_at before update on public.diaries
+create trigger handle_diary_updated_at before update on public.diaries
   for each row execute procedure moddatetime (updated_at);
 
 -- Secure the tables
 alter table public.diaries enable row level security;
 
-create policy "Allow select access" on public.diaries
-  for select to authenticated using (
-    auth.uid() = user_id
-  );
-
-create policy "Allow update access" on public.diaries
-  for update to authenticated using (
-    auth.uid() = user_id
-  );
-
-create policy "Allow delete access" on public.diaries
-  for delete to authenticated using (
+create policy "Allow all access to owner" on public.diaries
+  for all to authenticated using (
     auth.uid() = user_id
   );

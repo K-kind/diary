@@ -12,22 +12,22 @@ export const parseDiary = (row: DiaryRow): Diary => {
     id: row.id,
     userId: row.user_id,
     content: row.content,
-    date: new Date(row.date),
+    date: row.date,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
   };
 };
 
-export function toDiaryRow(room: Diary): DiaryRow;
-export function toDiaryRow(room: DiaryCreateParams): DiaryInsertRow;
-export function toDiaryRow(room: DiaryUpdateParams): DiaryUpdateRow;
-export function toDiaryRow(room: Partial<Diary>): Partial<DiaryRow> {
+export function toDiaryRow(diary: Diary): DiaryRow;
+export function toDiaryRow(diary: DiaryCreateParams): DiaryInsertRow;
+export function toDiaryRow(diary: DiaryUpdateParams): DiaryUpdateRow;
+export function toDiaryRow(diary: Partial<Diary>): Partial<DiaryRow> {
   return {
-    id: room?.id,
-    user_id: room?.userId,
-    content: room?.content,
-    date: room.date?.toUTCString(),
-    created_at: room.createdAt?.toUTCString(),
-    updated_at: room.updatedAt?.toUTCString(),
+    id: diary?.id,
+    user_id: diary?.userId,
+    content: diary?.content,
+    date: diary.date,
+    created_at: diary.createdAt?.toUTCString(),
+    updated_at: diary.updatedAt?.toUTCString(),
   };
 }

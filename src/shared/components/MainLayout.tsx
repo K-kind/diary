@@ -16,7 +16,7 @@ export const MainLayout = ({ children }: Props) => {
         body: { flex: 1 },
       }}
     >
-      <Container>{children}</Container>
+      <Container size="xl">{children}</Container>
     </AppShell>
   );
 };

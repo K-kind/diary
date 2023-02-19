@@ -34,7 +34,7 @@ type Options = {
 
 export const useDiaryList = ({ from, to, config }: Options) => {
   return useQuery<ExtractFnReturnType<QueryFnType>>({
-    queryKey: ["diaries"],
+    queryKey: ["diaries", { from, to }],
     queryFn: () => getDiaryList({ from, to }),
     retry: false,
     ...config,

@@ -8,13 +8,13 @@ export type Diary = {
   id: DiaryRow["id"];
   userId: DiaryRow["user_id"];
   content: DiaryRow["content"];
-  date: Date;
+  date: string;
   createdAt: Date;
   updatedAt: Date;
 };
 
 export type DiaryCreateParams = Partial<Diary> & {
   content: Diary["content"];
-  date: Date;
+  date: Diary["date"];
 };
 export type DiaryUpdateParams = Partial<Diary>;
