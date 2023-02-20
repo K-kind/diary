@@ -17,6 +17,7 @@
     "@fullcalendar/react": "^6.1.4",
     "@mantine/core": "^5.10.4",
     "@mantine/hooks": "^5.10.4",
+    "@mantine/notifications": "^5.10.4",
     "@mantine/tiptap": "^5.10.4",
     "@next/font": "13.1.6",
     "@supabase/supabase-js": "^2.8.0",
