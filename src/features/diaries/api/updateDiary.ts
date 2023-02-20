@@ -4,7 +4,7 @@ import { DiaryUpdateParams } from "@/features/diaries/types/diary";
 import { toDiaryRow } from "@/features/diaries/models/diary";
 
 export type UpdateDiaryDTO = {
-  id: string;
+  id: number;
   params: DiaryUpdateParams;
 };
 
@@ -17,7 +17,7 @@ export const updateDiary = async ({ id, params }: UpdateDiaryDTO) => {
 };
 
 type Options = {
-  id: string;
+  id: number;
 };
 
 export const useUpdateDiary = ({ id }: Options) => {

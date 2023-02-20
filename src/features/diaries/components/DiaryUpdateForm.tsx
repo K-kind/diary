@@ -1,4 +1,4 @@
-import { useCreateDiary } from "@/features/diaries/api/createDiary";
+import { useUpdateDiary } from "@/features/diaries/api/updateDiary";
 import { Diary } from "@/features/diaries/types/diary";
 import {
   RichTextEditor,
@@ -10,17 +10,16 @@ import { useQueryClient } from "@tanstack/react-query";
 import { FormEvent, useCallback, useState } from "react";
 
 type Props = {
-  date: string;
-  diary: Diary | null;
+  diary: Diary;
   setEditing: (editing: boolean) => void;
 };
 
-export const DiaryForm = ({ date, diary, setEditing }: Props) => {
+export const DiaryUpdateForm = ({ diary, setEditing }: Props) => {
   const [richTextState, setRichTextState] = useState<RichTextState | null>(
     null
   );
   const { notifySuccess, notifyError } = useNotification();
-  const createDiaryMutation = useCreateDiary();
+  const updateDiaryMutation = useUpdateDiary({ id: diary.id });
   const queryClient = useQueryClient();
 
   const close = useCallback(() => {
@@ -39,7 +38,7 @@ export const DiaryForm = ({ date, diary, setEditing }: Props) => {
       const { plainContent, content } = richTextState;
 
       try {
-        await createDiaryMutation.mutateAsync({ date, plainContent, content });
+        await updateDiaryMutation.mutateAsync({ plainContent, content });
         queryClient.invalidateQueries({ queryKey: ["diaries"] });
         close();
         notifySuccess({ message: "日記を保存しました。" });
@@ -49,8 +48,7 @@ export const DiaryForm = ({ date, diary, setEditing }: Props) => {
     },
     [
       richTextState,
-      date,
-      createDiaryMutation,
+      updateDiaryMutation,
       notifyError,
       notifySuccess,
       close,

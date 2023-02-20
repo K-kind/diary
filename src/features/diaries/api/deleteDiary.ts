@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/shared/lib/supabase";
 
 export type DeleteDiaryDTO = {
-  params: { id: string };
+  params: { id: number };
 };
 
 export const deleteDiary = async ({ params }: DeleteDiaryDTO) => {

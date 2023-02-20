@@ -1,9 +1,10 @@
 import { Diary } from "@/features/diaries/types/diary";
 import { Box, Button, Divider, Flex, Text } from "@mantine/core";
 import { format } from "@/shared/utils/date";
-import { useMemo, useState } from "react";
-import { DiaryForm } from "@/features/diaries/components/DiaryForm";
+import { useMemo } from "react";
+import { DiaryCreateForm } from "@/features/diaries/components/DiaryCreateForm";
 import { IconPencil } from "@tabler/icons";
+import { DiaryUpdateForm } from "@/features/diaries/components/DiaryUpdateForm";
 
 type Props = {
   date: string;
@@ -19,8 +20,13 @@ export const DiaryColumn = ({ date, diary, editing, setEditing }: Props) => {
   );
 
   const renderContent = () => {
-    if (editing)
-      return <DiaryForm date={date} diary={diary} setEditing={setEditing} />;
+    if (diary == null && editing) {
+      return <DiaryCreateForm date={date} setEditing={setEditing} />;
+    }
+
+    if (diary && editing) {
+      return <DiaryUpdateForm diary={diary} setEditing={setEditing} />;
+    }
 
     if (diary) {
       return (
