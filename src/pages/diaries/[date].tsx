@@ -20,10 +20,10 @@ export default function DiaryDetailPage() {
       </Head>
 
       <Grid>
-        <Grid.Col span={7}>
+        <Grid.Col span={12} lg={7} mih={252}>
           {date && <DiaryColumn date={date} diary={selectedDiary} />}
         </Grid.Col>
-        <Grid.Col span={5}>
+        <Grid.Col span={12} lg={5}>
           <Suspense fallback={<ContentLoader height={594} />}>
             {date && (
               <DiaryCalendar

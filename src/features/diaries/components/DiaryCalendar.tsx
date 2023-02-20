@@ -151,4 +151,8 @@ const StyledWrapper = styled("div")`
       color: black !important;
     }
   }
+
+  td.fc-day {
+    cursor: pointer;
+  }
 `;
