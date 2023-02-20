@@ -16,12 +16,14 @@ type Props = {
   selectedDate?: string;
   selectedDiary: Diary | null;
   setSelectedDiary: (diary: Diary | null) => void;
+  editing: boolean;
 };
 
 export const DiaryCalendar = ({
   selectedDate,
   selectedDiary,
   setSelectedDiary,
+  editing,
 }: Props) => {
   const theme = useMantineTheme();
   const router = useRouter();
@@ -75,6 +77,7 @@ export const DiaryCalendar = ({
     [selectedDate, router]
   );
 
+  // date変更時
   useEffect(() => {
     if (selectedDate == undefined) return;
 
@@ -88,7 +91,11 @@ export const DiaryCalendar = ({
 
   return (
     <StyledWrapper style={{ position: "relative" }}>
-      <LoadingOverlay visible={diaryListQuery.isLoading} />
+      <LoadingOverlay
+        visible={diaryListQuery.isLoading || editing}
+        loader={editing ? <></> : undefined}
+        overlayOpacity={0.5}
+      />
       <FullCalendar
         ref={calendarRef}
         plugins={[dayGridPlugin, interactionPlugin]}

@@ -8,14 +8,15 @@ import { IconPencil } from "@tabler/icons";
 type Props = {
   date: string;
   diary: Diary | null;
+  editing: boolean;
+  setEditing: (editing: boolean) => void;
 };
 
-export const DiaryColumn = ({ date, diary }: Props) => {
+export const DiaryColumn = ({ date, diary, editing, setEditing }: Props) => {
   const dateString = useMemo(
     () => format(new Date(date), "yyyy年MM月dd日（ccc）"),
     [date]
   );
-  const [editing, setEditing] = useState(false);
 
   const renderContent = () => {
     if (editing)
