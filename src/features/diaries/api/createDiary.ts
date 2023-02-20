@@ -10,7 +10,9 @@ export type createDiaryDTO = {
 export const createDiary = async ({ params }: createDiaryDTO) => {
   const { data, error } = await supabase
     .from("diaries")
-    .insert(toDiaryRow(params))
+    .insert(
+      toDiaryRow({ ...params, userId: "4acca826-cfa4-4f06-b7ce-c8e5415fd0f6" })
+    ) // TODO
     .select()
     .single();
   if (error) throw error;

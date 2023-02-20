@@ -40,6 +40,7 @@ export interface Database {
           created_at: string
           date: string
           id: number
+          plain_content: string
           updated_at: string
           user_id: string
         }
@@ -48,6 +49,7 @@ export interface Database {
           created_at?: string
           date: string
           id?: number
+          plain_content: string
           updated_at?: string
           user_id: string
         }
@@ -56,6 +58,7 @@ export interface Database {
           created_at?: string
           date?: string
           id?: number
+          plain_content?: string
           updated_at?: string
           user_id?: string
         }

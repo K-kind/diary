@@ -45,7 +45,7 @@ export const DiaryCalendar = ({
   const events = useMemo(() => {
     return (diaryListQuery.data || []).map((diary) => {
       return {
-        title: diary.content.slice(0, 12),
+        title: diary.plainContent.slice(0, 12),
         start: diary.date,
       };
     });
