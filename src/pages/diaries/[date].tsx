@@ -25,7 +25,13 @@ export default function DiaryDetailPage() {
         </Grid.Col>
         <Grid.Col span={5}>
           <Suspense fallback={<ContentLoader height={594} />}>
-            {date && <DiaryCalendar initialDate={date} />}
+            {date && (
+              <DiaryCalendar
+                selectedDate={date}
+                selectedDiary={selectedDiary}
+                setSelectedDiary={setSelectedDiary}
+              />
+            )}
           </Suspense>
         </Grid.Col>
       </Grid>
