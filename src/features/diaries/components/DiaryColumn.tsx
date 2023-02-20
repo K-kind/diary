@@ -18,7 +18,8 @@ export const DiaryColumn = ({ date, diary }: Props) => {
   const [editing, setEditing] = useState(false);
 
   const renderContent = () => {
-    if (editing) return <DiaryForm diary={diary} setEditing={setEditing} />;
+    if (editing)
+      return <DiaryForm date={date} diary={diary} setEditing={setEditing} />;
 
     if (diary) {
       return (

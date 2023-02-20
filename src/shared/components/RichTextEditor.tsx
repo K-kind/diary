@@ -3,15 +3,24 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useCallback } from "react";
 
+export type RichTextState = { plainContent: string; content: string };
+
 type Props = {
-  content: string | null;
+  initialContent: string | null;
+  setRichTextState: (state: RichTextState) => void;
 };
 
-export const RichTextEditor = ({ content }: Props) => {
+export const RichTextEditor = ({ initialContent, setRichTextState }: Props) => {
   const editor = useEditor({
     extensions: [StarterKit, Link],
-    content,
-    onCreate: () => focus(),
+    content: initialContent,
+    autofocus: true,
+    onUpdate: ({ editor }) => {
+      setRichTextState({
+        plainContent: editor.getText(),
+        content: editor.getHTML(),
+      });
+    },
   });
 
   const focus = useCallback(() => {
