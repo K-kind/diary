@@ -26,7 +26,6 @@ export const SignupForm = () => {
     try {
       await signUpMutation.mutateAsync(formValues);
       notifySuccess({ message: "登録が完了しました" });
-      router.push(`/diaries/${format(new Date(), "yyyy-MM-dd")}`);
     } catch (e) {
       notifyError();
     }

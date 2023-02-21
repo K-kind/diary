@@ -25,7 +25,6 @@ export const SigninForm = () => {
     try {
       await signInMutation.mutateAsync(formValues);
       notifySuccess({ message: "ログインしました" });
-      router.push(`/diaries/${format(new Date(), "yyyy-MM-dd")}`);
     } catch (e) {
       notifyError({ message: "ログインに失敗しました" });
     }
