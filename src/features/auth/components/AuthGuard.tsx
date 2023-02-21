@@ -22,7 +22,7 @@ export const AuthGuard = ({ children }: Props) => {
   const { user, setUser, authError, setAuthError } = useContext(AuthContext);
 
   const fetchAndSetUser = useCallback(async () => {
-    if (user) return user;
+    if (user !== undefined) return user;
 
     let u;
     try {
