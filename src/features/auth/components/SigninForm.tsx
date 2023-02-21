@@ -1,4 +1,4 @@
-import { useSignUp } from "@/features/auth/api/signUp";
+import { useSignIn } from "@/features/auth/api/signIn";
 import { useNotification } from "@/shared/hooks/useNotification";
 import { format } from "@/shared/utils/date";
 import { Button, Card, Flex, Group, Text, TextInput } from "@mantine/core";
@@ -7,35 +7,34 @@ import { useRouter } from "next/router";
 
 type FormValues = { email: string; password: string };
 
-export const SignupForm = () => {
+export const SigninForm = () => {
   const form = useForm<FormValues>({
     initialValues: { email: "", password: "" },
     validate: {
       email: (value) =>
         /^\S+@\S+$/.test(value) ? null : "無効なメールアドレスです",
-      password: (value) =>
-        value.length > 5 ? null : "6文字以上で入力してください",
+      password: (value) => (value ? null : "入力してください"),
     },
   });
 
-  const signUpMutation = useSignUp();
+  const signInMutation = useSignIn();
   const { notifyError, notifySuccess } = useNotification();
   const router = useRouter();
 
   const handleSubmit = async (formValues: FormValues) => {
     try {
-      await signUpMutation.mutateAsync(formValues);
-      notifySuccess({ message: "登録が完了しました" });
+      await signInMutation.mutateAsync(formValues);
+      notifySuccess({ message: "ログインしました" });
       router.push(`/diaries/${format(new Date(), "yyyy-MM-dd")}`);
     } catch (e) {
-      notifyError();
+      notifyError({ message: "ログインに失敗しました" });
     }
   };
 
   return (
     <Card w={{ base: 300, sm: 320 }} withBorder shadow="sm" radius="md">
       <Card.Section withBorder inheritPadding py="xs">
-        <Text weight={400}>新規登録</Text>
+        <Text weight={400}>ログイン</Text>
       </Card.Section>
 
       <Card.Section withBorder inheritPadding py="xs">
@@ -56,7 +55,7 @@ export const SignupForm = () => {
           />
 
           <Flex justify="center" align="center">
-            <Button type="submit">登録</Button>
+            <Button type="submit">ログイン</Button>
           </Flex>
         </form>
       </Card.Section>

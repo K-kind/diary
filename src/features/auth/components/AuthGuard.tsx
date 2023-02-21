@@ -6,7 +6,7 @@ import { ContentLoader } from "@/shared/components/ContentLoader";
 import { useRouter } from "next/router";
 import { format } from "@/shared/utils/date";
 
-const GUEST_PATH = ["/", "/signup", "/signin"];
+const GUEST_PATH = ["/", "/signup"];
 
 type Props = {
   children: ReactNode;
